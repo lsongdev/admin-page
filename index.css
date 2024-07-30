@@ -1,4 +1,6 @@
 @import url(https://lsong.org/css/stylesheet.css);
+@import url(sidebar.css);
+
 
 @media screen and (min-width: 768px) {
   .container {
@@ -26,5 +28,9 @@
 
   x-sidebar {
     position: static;
+  }
+
+  .nav-bar {
+    flex: 1 1 auto;
   }
 }
