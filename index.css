@@ -1,7 +1,6 @@
 @import url(https://lsong.org/css/stylesheet.css);
 @import url(sidebar.css);
 
-
 @media screen and (min-width: 768px) {
   .container {
     padding: 0;
@@ -16,7 +15,7 @@
     left: 0;
     right: 0;
     z-index: 99;
-    padding: 0 15px;
+    padding: 0 1em;
     position: absolute;
     backdrop-filter: blur(12px) saturate(1.25);
   }
