@@ -19,8 +19,7 @@
   <link rel="apple-touch-icon" sizes="128x128" type="image/png" href="https://lsong.org/icon-x128.png">
   <link rel="apple-touch-icon" sizes="512x512" type="image/png" href="https://lsong.org/icon-x512.png">
   <link rel="stylesheet" href="index.css">
-  <script type="module" src="https://lsong.org/scripts/components/menu.js"></script>
-  <script type="module" src="https://lsong.org/scripts/components/sidebar.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script type="module" src="index.js"></script>
 
 </head>
@@ -44,15 +43,32 @@
       <hr />
     </header>
 
-    <x-sidebar id="mySidebar">
-      <header slot="sidebar-header">
-        <h4>&nbsp;</h4>
-      </header>
-      <x-menu slot="sidebar-content" id="myMenu"></x-menu>
-      <footer slot="sidebar-footer">
-        © 2024 Your Company
-      </footer>
-    </x-sidebar>
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h2>&nbsp;</h2>
+      </div>
+      <ul class="sidebar-menu">
+        <li><a href="#"><i class="fas fa-home"></i><span>首页</span></a></li>
+        <li>
+          <a href="#"><i class="fas fa-info-circle"></i><span>关于我们</span></a>
+          <ul>
+            <li><a href="#"><i class="fas fa-users"></i><span>团队</span></a></li>
+            <li><a href="#"><i class="fas fa-history"></i><span>历史</span></a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-cogs"></i><span>服务</span></a>
+          <ul>
+            <li><a href="#"><i class="fas fa-laptop"></i><span>Web开发</span></a></li>
+            <li><a href="#"><i class="fas fa-mobile-alt"></i><span>App开发</span></a></li>
+          </ul>
+        </li>
+        <li><a href="#"><i class="fas fa-envelope"></i><span>联系我们</span></a></li>
+      </ul>
+      <div class="sidebar-footer">
+        <p>© 2023 Your Company</p>
+      </div>
+    </div>
 
     <main class="content">
 
@@ -86,6 +102,7 @@
         </form>
       </section>
     </main>
+
     <!-- <footer class="footer">
       <hr />
       Liu Song
@@ -94,54 +111,58 @@
       </address>
       <a href="https://lsong.org">https://lsong.org</a>
     </footer> -->
-  </div>
 
+  </div>
 </body>
 <script>
-  const menuData = [
-    { id: 'dashboard', icon: '🏠', title: 'Dashboard', },
-    { id: 'analytics', icon: '📊', title: 'Analytics' },
-    {
-      id: 'projects',
-      icon: '📁',
-      title: 'Projects',
-      open: false,
-      children: [
-        { id: 'current', title: 'Current Projects', checked: true },
-        { id: 'archived', title: 'Archived Projects' }
-      ]
-    },
-    { id: 'calendar', icon: '📅', title: 'Calendar', active: true },
-    { id: 'settings', icon: '⚙️', title: 'Settings' },
-  ];
-
-  customElements.whenDefined('x-menu').then(() => {
-    const menu = document.getElementById('myMenu');
-    menu.items = menuData;
-
-    menu.addEventListener('item-click', (e) => {
-      console.log('Item clicked:', e.detail);
-    });
-
-    menu.addEventListener('item-open', (e) => {
-      console.log('Folder toggled:', e.detail);
-    });
-
-    menu.addEventListener('item-checked', (e) => {
-      console.log('Checkbox changed:', e.detail);
-    });
-
-    menu.addEventListener('item-active', (e) => {
-      console.log('Active item changed:', e.detail);
-    });
-  });
-
-  document.querySelector('button').addEventListener('click', () => {
-    mySidebar.hidden = !mySidebar.hidden;
-  });
+  const mySidebar = document.querySelector('.sidebar');
   window.onresize = () => {
-    mySidebar.hidden = document.body.clientWidth < 768;
+    const isMobile = document.body.clientWidth < 768;
+    if (isMobile) {
+      mySidebar.classList.add('sidebar-hide');
+    } else {
+      mySidebar.classList.remove('sidebar-hide');
+    }
   };
+</script>
+<script>
+  const sidebar = document.querySelector('.sidebar-menu');
+  const content = document.querySelector('.content');
+  const toggleBtn = document.querySelector('button');
+  const menuItems = document.querySelectorAll('.sidebar-menu > li');
+
+  let sidebarState = 0; // 0: expanded, 1: mini, 2: hide
+
+  toggleBtn.addEventListener('click', () => {
+    sidebarState = (sidebarState + 1) % 3;
+    updateSidebarState();
+  });
+
+  function updateSidebarState() {
+    sidebar.classList.remove('sidebar-menu-mini', 'sidebar-menu-hide');
+    content.classList.remove('expanded', 'fully-expanded');
+
+    if (sidebarState === 1) {
+      sidebar.classList.add('sidebar-menu-mini');
+      content.classList.add('expanded');
+    } else if (sidebarState === 2) {
+      sidebar.classList.add('sidebar-menu-hide');
+      content.classList.add('fully-expanded');
+    }
+  }
+
+  menuItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      const item = e.target.closest('li');
+      if (item.querySelector('ul')) {
+        item.classList.toggle('sidebar-menu-item-collapsed');
+      } else {
+        document.querySelectorAll('.sidebar-menu-item-active').forEach(i => i.classList.remove('sidebar-menu-item-active'));
+        item.classList.add('sidebar-menu-item-active');
+      }
+    });
+  });
 </script>
 
 </html>

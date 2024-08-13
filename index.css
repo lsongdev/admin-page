@@ -1,5 +1,10 @@
 @import url(https://lsong.org/css/stylesheet.css);
-@import url(sidebar.css);
+@import url(https://lsong.org/stylesheets/sidebar.css?z);
+
+
+.sidebar {
+  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.1);
+}
 
 @media screen and (min-width: 768px) {
   .container {
@@ -25,7 +30,7 @@
     overflow: auto;
   }
 
-  x-sidebar {
+  .sidebar {
     position: static;
   }
 
