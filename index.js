@@ -49,12 +49,10 @@ ready(() => {
   render(h(App), app);
 });
 
-// 使用示例:
 document.addEventListener('DOMContentLoaded', () => {
   const sidebarElement = document.querySelector('.sidebar');
   const sidebar = new Sidebar(sidebarElement);
 
-  // 控制侧边栏状态的逻辑
   const toggleButton = document.querySelector('button');
   const content = document.querySelector('.content');
   let sidebarState = 0; // 0: expanded, 1: mini, 2: hidden
@@ -65,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
     sidebar.setState(states[sidebarState]);
   });
 
-  // 示例: 添加新的菜单项
   sidebar.addMenuItem({
     href: '#',
     iconClass: 'fas fa-chart-bar',

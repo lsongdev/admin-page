@@ -1,5 +1,6 @@
 @import url(https://lsong.org/css/stylesheet.css);
-@import url(https://lsong.org/stylesheets/sidebar.css?z);
+@import url(https://lsong.org/stylesheets/button.css);
+@import url(https://lsong.org/stylesheets/sidebar.css?v2);
 
 
 .sidebar {
@@ -25,7 +26,7 @@
     backdrop-filter: blur(12px) saturate(1.25);
   }
 
-  .content {
+  main.content {
     padding: 50px;
     overflow: auto;
   }
